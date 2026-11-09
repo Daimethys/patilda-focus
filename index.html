@@ -41,11 +41,11 @@
 
     /* Glassmorphic Panel */
     .glass-card {
-      background: rgba(10, 18, 30, 0.58);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(10, 18, 30, 0.45);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
                   0 0 40px rgba(52, 211, 153, 0.08);
     }
 
@@ -87,8 +87,8 @@
 
     /* Cosmic Fur Pulsing Nebula Glow */
     @keyframes nebulaPulse {
-      0%, 100% { filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5)) drop-shadow(0 0 22px rgba(216, 180, 254, 0.25)); }
-      50% { filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.8)) drop-shadow(0 0 32px rgba(147, 51, 234, 0.45)); }
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.45)) drop-shadow(0 0 20px rgba(216, 180, 254, 0.25)); }
+      50% { filter: drop-shadow(0 0 18px rgba(192, 132, 252, 0.75)) drop-shadow(0 0 28px rgba(147, 51, 234, 0.4)); }
     }
     .galaxy-cat-body {
       animation: nebulaPulse 4s ease-in-out infinite;
@@ -123,11 +123,16 @@
       border-radius: 50%;
       animation: twinkle 3s ease-in-out infinite;
     }
+
+    /* Pulsing Glow */
+    .glow-aura {
+      transition: all 0.5s ease;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative selection:bg-emerald-500 selection:text-black">
 
-  <!-- Interactive Aurora Sky Canvas -->
+  <!-- Interactive / Smooth Aurora Sky Canvas -->
   <canvas id="aurora-canvas"></canvas>
 
   <!-- Stars layer -->
@@ -151,7 +156,7 @@
       <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white drop-shadow-md font-display">
         Focus Time with <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-300 bg-clip-text text-transparent">Patilda</span>
       </h1>
-      <p class="text-xs sm:text-sm text-slate-300/80 mt-1">50 min focus &bull; 10 min break &bull; with a fluffy cosmic cat</p>
+      <p class="text-xs sm:text-sm text-slate-300/80 mt-1">50 min focus &bull; 10 min break &bull; with a curious feline companion</p>
     </header>
 
     <!-- Circular Timer Card -->
@@ -212,24 +217,9 @@
           />
         </svg>
 
-        <!-- Center Time & State Display -->
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-center z-10 select-none pointer-events-none">
-          <span id="session-label" class="text-xs uppercase tracking-widest text-emerald-300 font-semibold mb-1">Deep Focus</span>
-          <div id="time-display" class="text-5xl sm:text-6xl font-bold font-display tracking-tight text-white drop-shadow">
-            50:00
-          </div>
-          <span id="cycle-count" class="text-xs text-slate-300 mt-2.5 font-medium flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 shadow-sm pointer-events-auto">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i>
-            <span>Completed Cycles: <strong id="cycle-val" class="text-white font-bold text-sm">0</strong></span>
-          </span>
-        </div>
-      </div>
-
-      <!-- Fluffy Cosmic Cat Companion (Fixed above timer dial) -->
-      <div id="cat-carrier" class="relative -mt-16 sm:-mt-20 z-20 w-32 h-32 sm:w-36 sm:h-36 pointer-events-none flex items-center justify-center">
-        
-        <!-- FOCUS MODE CAT SVG (Fluffy cosmic purple tabby cat studying with open eyes) -->
-        <svg id="focus-cat-svg" class="w-full h-full galaxy-cat-body cat-breath" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- The Orbiting Galaxy Cat Layer (Fluffy Purple Tabby) -->
+      <div id="cat-carrier" class="absolute w-24 h-24 sm:w-28 sm:h-28 pointer-events-none transition-transform duration-300 ease-out flex items-center justify-center" style="left: calc(50% - 48px); top: calc(50% - 48px);">
+        <svg class="w-full h-full galaxy-cat-body cat-breath" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="baseFurGrad" cx="50%" cy="45%" r="65%">
               <stop offset="0%" stop-color="#c084fc"/>
@@ -237,34 +227,54 @@
               <stop offset="85%" stop-color="#3b0764"/>
               <stop offset="100%" stop-color="#1e0538"/>
             </radialGradient>
+
             <linearGradient id="stripeDark" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#3b0764"/>
               <stop offset="50%" stop-color="#240046"/>
               <stop offset="100%" stop-color="#140124"/>
             </linearGradient>
+
+            <linearGradient id="stripeLilac" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f5d0fe"/>
+              <stop offset="100%" stop-color="#d8b4fe"/>
+            </linearGradient>
+
             <radialGradient id="earInnerFluff" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#fdf4ff"/>
               <stop offset="40%" stop-color="#f0abfc"/>
               <stop offset="100%" stop-color="#9333ea"/>
             </radialGradient>
+
             <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="rgba(30, 5, 56, 0.95)"/>
               <stop offset="100%" stop-color="rgba(60, 15, 100, 0.95)"/>
             </linearGradient>
+
+            <radialGradient id="teaCupGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#34d399"/>
+              <stop offset="100%" stop-color="#047857"/>
+            </radialGradient>
+            <linearGradient id="teaLiquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#6ee7b7"/>
+              <stop offset="100%" stop-color="#059669"/>
+            </linearGradient>
           </defs>
 
-          <!-- Fluffy Tail -->
+          <!-- Fluffy Striped Tail -->
           <g class="cat-tail">
             <path d="M28 66 C15 64 6 74 10 85 C14 94 25 93 29 86 C33 79 33 73 38 67 Z" fill="url(#baseFurGrad)"/>
             <path d="M12 76 C8 78 7 83 11 86 C15 89 19 86 16 83 Z" fill="#9333ea" opacity="0.8"/>
             <path d="M18 88 C15 92 20 95 24 92 C27 90 25 86 21 87 Z" fill="#7e22ce" opacity="0.8"/>
+            <path d="M9 83 C6 85 9 91 14 91 C17 90 14 84 10 83 Z" fill="#e9d5ff"/>
             <path d="M22 68 C18 69 16 73 21 75" stroke="url(#stripeDark)" stroke-width="2.5" stroke-linecap="round"/>
             <path d="M17 76 C13 78 12 82 17 83" stroke="url(#stripeDark)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M16 84 C17 87 22 88 24 85" stroke="url(#stripeDark)" stroke-width="2.2" stroke-linecap="round"/>
           </g>
 
-          <!-- Fluffy Body -->
+          <!-- Fluffy Cat Body -->
           <g>
             <path d="M52 48 C66 48 76 56 78 68 C79 72 81 74 79 77 C77 80 75 80 75 83 C74 86 70 87 67 87 C63 87 60 85 52 85 C44 85 41 87 37 87 C34 87 30 86 29 83 C29 80 27 80 25 77 C23 74 25 72 26 68 C28 56 38 48 52 48 Z" fill="url(#baseFurGrad)"/>
+            <path d="M46 62 C43 65 41 68 45 71 C47 72 49 70 52 70 C55 70 57 72 59 71 C63 68 61 65 58 62 C55 64 49 64 46 62 Z" fill="#a855f7" opacity="0.6"/>
             <path d="M30 63 C36 64 40 67 43 70" stroke="url(#stripeDark)" stroke-width="2" stroke-linecap="round"/>
             <path d="M28 71 C34 72 37 74 40 76" stroke="url(#stripeDark)" stroke-width="2.2" stroke-linecap="round"/>
             <path d="M74 63 C68 64 64 67 61 70" stroke="url(#stripeDark)" stroke-width="2" stroke-linecap="round"/>
@@ -284,8 +294,15 @@
 
             <path d="M52 18 C64 18 73 24 75 33 C78 34 81 37 82 40 C80 41 77 42 79 44 C81 46 80 49 76 50 C74 54 68 56 52 56 C36 56 30 54 28 50 C24 49 23 46 25 44 C27 42 24 41 22 40 C23 37 26 34 29 33 C31 24 40 18 52 18 Z" fill="url(#baseFurGrad)"/>
 
-            <!-- Open Cyan Eyes -->
-            <g class="cat-eyes">
+            <!-- FOCUS ACCESSORY: Cute Glasses -->
+            <g id="focus-glasses">
+              <rect x="38" y="31" width="12" height="10" rx="2" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+              <rect x="54" y="31" width="12" height="10" rx="2" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+              <line x1="50" y1="35" x2="54" y2="35" stroke="#fbbf24" stroke-width="1.8"/>
+            </g>
+
+            <!-- EYES: Focus (Cyan open eyes) vs Break (Happy closed eyes ^_^) -->
+            <g id="cat-eyes-focus" class="cat-eyes">
               <ellipse cx="44" cy="36" rx="4.8" ry="5.8" fill="#140124"/>
               <ellipse cx="60" cy="36" rx="4.8" ry="5.8" fill="#140124"/>
               <ellipse cx="44" cy="36" rx="4.1" ry="5.1" fill="#22d3ee"/>
@@ -296,173 +313,98 @@
               <circle cx="58.5" cy="34" r="1.4" fill="#ffffff"/>
             </g>
 
+            <g id="cat-eyes-break" class="hidden">
+              <path d="M40 36 C42 33 46 33 48 36" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <path d="M56 36 C58 33 62 33 64 36" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </g>
+
             <polygon points="50.5,42.5 53.5,42.5 52,44.8" fill="#f472b6"/>
             <path d="M49 46 Q52 48 52 46 Q52 48 55 46" stroke="#c084fc" stroke-width="1.3" fill="none" stroke-linecap="round"/>
 
-            <!-- Whiskers -->
             <line x1="42" y1="43" x2="22" y2="40" stroke="#bae6fd" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
-            <line x1="42" y1="45" x2="24" y2="47" stroke="#f5d0fe" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
             <line x1="62" y1="43" x2="82" y2="40" stroke="#bae6fd" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
-            <line x1="62" y1="45" x2="80" y2="47" stroke="#f5d0fe" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
           </g>
 
-          <!-- Open Book / Study Accessory -->
-          <g transform="translate(0, 2)">
-            <path d="M38 52 L52 46 L66 52 L66 62 L52 56 L38 62 Z" fill="#f8fafc" stroke="#3b0764" stroke-width="1.2"/>
-            <path d="M52 46 L52 56" stroke="#9333ea" stroke-width="1"/>
-            <line x1="41" y1="52" x2="48" y2="49" stroke="#7e22ce" stroke-width="0.8" stroke-linecap="round"/>
-            <line x1="41" y1="55" x2="47" y2="52" stroke="#7e22ce" stroke-width="0.8" stroke-linecap="round"/>
-            <line x1="56" y1="49" x2="63" y2="52" stroke="#7e22ce" stroke-width="0.8" stroke-linecap="round"/>
-            <line x1="56" y1="52" x2="62" y2="55" stroke="#7e22ce" stroke-width="0.8" stroke-linecap="round"/>
-          </g>
-
-          <!-- Floating Speech Bubble with white text "Do it!" -->
-          <g class="speech-bubble">
-            <rect x="58" y="1" width="44" height="20" rx="8" fill="#1e0538" opacity="0.35"/>
-            <rect x="57" y="0" width="44" height="20" rx="8" fill="url(#bubbleGrad)" stroke="#c084fc" stroke-width="1"/>
-            <polygon points="63,20 60,25 68,19" fill="#240046"/>
-            <polyline points="63,20 60,25 68,19" stroke="#c084fc" stroke-width="0.8" fill="none"/>
-            <text x="79" y="14" fill="#ffffff" font-family="'Space Grotesk', sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="0.4">Do it!</text>
-          </g>
-        </svg>
-
-        <!-- BREAK MODE CAT SVG (Identical fluffy cosmic purple tabby cat with happy closed eyes & emerald tea cup) -->
-        <svg id="break-cat-svg" class="w-full h-full galaxy-cat-body cat-breath hidden" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="teaCupGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#34d399"/>
-              <stop offset="100%" stop-color="#047857"/>
-            </radialGradient>
-            <linearGradient id="teaLiquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#6ee7b7"/>
-              <stop offset="100%" stop-color="#059669"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Fluffy Tail -->
-          <g class="cat-tail">
-            <path d="M28 66 C15 64 6 74 10 85 C14 94 25 93 29 86 C33 79 33 73 38 67 Z" fill="url(#baseFurGrad)"/>
-            <path d="M12 76 C8 78 7 83 11 86 C15 89 19 86 16 83 Z" fill="#9333ea" opacity="0.8"/>
-            <path d="M18 88 C15 92 20 95 24 92 C27 90 25 86 21 87 Z" fill="#7e22ce" opacity="0.8"/>
-            <path d="M22 68 C18 69 16 73 21 75" stroke="url(#stripeDark)" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M17 76 C13 78 12 82 17 83" stroke="url(#stripeDark)" stroke-width="2.5" stroke-linecap="round"/>
-          </g>
-
-          <!-- Fluffy Body -->
-          <g>
-            <path d="M52 48 C66 48 76 56 78 68 C79 72 81 74 79 77 C77 80 75 80 75 83 C74 86 70 87 67 87 C63 87 60 85 52 85 C44 85 41 87 37 87 C34 87 30 86 29 83 C29 80 27 80 25 77 C23 74 25 72 26 68 C28 56 38 48 52 48 Z" fill="url(#baseFurGrad)"/>
-            <path d="M30 63 C36 64 40 67 43 70" stroke="url(#stripeDark)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M28 71 C34 72 37 74 40 76" stroke="url(#stripeDark)" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M74 63 C68 64 64 67 61 70" stroke="url(#stripeDark)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M76 71 C70 72 67 74 64 76" stroke="url(#stripeDark)" stroke-width="2.2" stroke-linecap="round"/>
-            <ellipse cx="40" cy="85" rx="5.5" ry="4.5" fill="#240046"/>
-            <ellipse cx="64" cy="85" rx="5.5" ry="4.5" fill="#240046"/>
-          </g>
-
-          <!-- Head (Identical head shape & ears) -->
-          <g>
-            <g class="cat-ears">
-              <polygon points="37,36 30,12 47,23" fill="#240046"/>
-              <polygon points="36,33 33,16 45,24" fill="url(#earInnerFluff)"/>
-              <polygon points="67,36 74,12 57,23" fill="#240046"/>
-              <polygon points="68,33 71,16 59,24" fill="url(#earInnerFluff)"/>
-            </g>
-
-            <path d="M52 18 C64 18 73 24 75 33 C78 34 81 37 82 40 C80 41 77 42 79 44 C81 46 80 49 76 50 C74 54 68 56 52 56 C36 56 30 54 28 50 C24 49 23 46 25 44 C27 42 24 41 22 40 C23 37 26 34 29 33 C31 24 40 18 52 18 Z" fill="url(#baseFurGrad)"/>
-
-            <!-- Happy Closed Eyes (Arcs ^_^) -->
-            <path d="M40 36 C42 33 46 33 48 36" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M56 36 C58 33 62 33 64 36" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" fill="none"/>
-
-            <polygon points="50.5,41 53.5,41 52,43" fill="#f472b6"/>
-            <path d="M48 45 Q52 47 56 45" stroke="#c084fc" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-
-            <!-- Whiskers -->
-            <line x1="42" y1="43" x2="22" y2="40" stroke="#bae6fd" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
-            <line x1="42" y1="45" x2="24" y2="47" stroke="#f5d0fe" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
-            <line x1="62" y1="43" x2="82" y2="40" stroke="#bae6fd" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
-            <line x1="62" y1="45" x2="80" y2="47" stroke="#f5d0fe" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
-          </g>
-
-          <!-- Emerald Green Tea Cup held in Paws -->
-          <g transform="translate(0, 2)">
+          <!-- BREAK ACCESSORY: Emerald Green Tea Cup -->
+          <g id="break-teacup" class="hidden" transform="translate(0, 2)">
             <path d="M48 20 Q50 15 48 10 Q46 5 49 2" stroke="#6ee7b7" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7">
               <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
-            </path>
-            <path d="M56 22 Q58 17 56 12 Q54 7 57 4" stroke="#6ee7b7" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.6">
-              <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.4s" repeatCount="indefinite"/>
             </path>
             <path d="M40 48 L43 65 C43 67 61 67 61 65 L64 48 Z" fill="url(#teaCupGrad)" stroke="#6ee7b7" stroke-width="1"/>
             <ellipse cx="52" cy="49" rx="11" ry="3" fill="url(#teaLiquidGrad)"/>
             <path d="M63 51 C69 51 69 62 63 62" stroke="#34d399" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <ellipse cx="44" cy="56" rx="4" ry="3.5" fill="#7e22ce"/>
-            <ellipse cx="60" cy="56" rx="4" ry="3.5" fill="#7e22ce"/>
           </g>
 
-          <!-- Floating Speech Bubble with white text "its tea time" -->
+          <!-- Floating Speech Bubble -->
           <g class="speech-bubble">
-            <rect x="36" y="-1" width="76" height="21" rx="8" fill="#1e0538" opacity="0.35"/>
-            <rect x="35" y="-2" width="76" height="21" rx="8" fill="url(#bubbleGrad)" stroke="#34d399" stroke-width="1"/>
-            <polygon points="57,19 54,24 62,18" fill="#240046"/>
-            <polyline points="57,19 54,24 62,18" stroke="#34d399" stroke-width="0.8" fill="none"/>
-            <text x="73" y="12" fill="#ffffff" font-family="'Space Grotesk', sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="0.2">its tea time</text>
+            <rect id="bubble-bg" x="58" y="1" width="44" height="20" rx="8" fill="#1e0538" opacity="0.35"/>
+            <rect id="bubble-rect" x="57" y="0" width="44" height="20" rx="8" fill="url(#bubbleGrad)" stroke="#c084fc" stroke-width="1"/>
+            <polygon id="bubble-poly" points="63,20 60,25 68,19" fill="#240046"/>
+            <polyline id="bubble-line" points="63,20 60,25 68,19" stroke="#c084fc" stroke-width="0.8" fill="none"/>
+            <text id="bubble-text" x="79" y="14" fill="#ffffff" font-family="'Space Grotesk', sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="0.4">Do it!</text>
           </g>
         </svg>
       </div>
 
-      <!-- Mode Selector Tabs -->
-      <div class="w-full grid grid-cols-2 gap-2 mt-4 mb-5">
-        <button id="mode-focus-btn" class="py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-          <i data-lucide="brain" class="w-4 h-4"></i>
-          <span>Focus (50m)</span>
-        </button>
-        <button id="mode-break-btn" class="py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-white/5 text-slate-400 hover:bg-white/10 border border-transparent">
-          <i data-lucide="coffee" class="w-4 h-4"></i>
-          <span>Break (10m)</span>
-        </button>
+      <!-- Center Time & State Display -->
+      <div class="flex flex-col items-center justify-center text-center z-10 select-none">
+        <span id="session-label" class="text-xs uppercase tracking-widest text-emerald-300 font-semibold mb-1">Deep Focus</span>
+        <div id="time-display" class="text-5xl sm:text-6xl font-bold font-display tracking-tight text-white drop-shadow">
+          50:00
+        </div>
+        <span id="cycle-count" class="text-xs text-slate-300 mt-2.5 font-medium flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 shadow-sm">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i>
+          <span>Completed Cycles: <strong id="cycle-val" class="text-white font-bold text-sm">0</strong></span>
+        </span>
       </div>
-
-      <!-- Control Buttons -->
-      <div class="w-full flex items-center justify-center gap-3">
-        <button id="btn-toggle" class="flex-1 max-w-[170px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-gray-950 font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-95 transition-all duration-200">
-          <i id="btn-icon" data-lucide="play" class="w-5 h-5 fill-current"></i>
-          <span id="btn-text">Start</span>
-        </button>
-
-        <button id="btn-reset" title="Reset Timer" class="p-3.5 rounded-2xl glass-card hover:bg-white/10 text-slate-300 hover:text-white transition-all active:scale-95 border border-white/10">
-          <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
-        </button>
-
-        <button id="btn-skip" title="Skip Session" class="p-3.5 rounded-2xl glass-card hover:bg-white/10 text-slate-300 hover:text-white transition-all active:scale-95 border border-white/10">
-          <i data-lucide="skip-forward" class="w-5 h-5"></i>
-        </button>
-
-        <button id="btn-sound" title="Toggle Sound" class="p-3.5 rounded-2xl glass-card hover:bg-white/10 text-slate-300 hover:text-white transition-all active:scale-95 border border-white/10">
-          <i id="sound-icon" data-lucide="volume-2" class="w-5 h-5"></i>
-        </button>
-      </div>
-
     </div>
 
-    <!-- Footer Note -->
-    <footer class="mt-6 text-center text-xs text-slate-400/70">
-      <p>&ldquo;I did this because I only ever find 25-minute Pomodoros, so I made a longer one.&rdquo;</p>
-      <p class="mt-1">Focus Time with Patilda &bull; Crafted with celestial love</p>
-    </footer>
+    <!-- Mode Selector Tabs -->
+    <div class="w-full grid grid-cols-2 gap-2 mt-4 p-1.5 rounded-2xl glass-card">
+      <button id="mode-focus-btn" class="py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+        <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+        <span>Focus (50m)</span>
+      </button>
+      <button id="mode-break-btn" class="py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all bg-white/5 text-slate-400 hover:bg-white/10 border border-transparent">
+        <i data-lucide="coffee" class="w-3.5 h-3.5"></i>
+        <span>Break (10m)</span>
+      </button>
+    </div>
 
+    <!-- Timer Action Controls -->
+    <div class="w-full flex items-center justify-center gap-3 mt-4">
+      <button id="btn-reset" title="Reset Session" class="w-12 h-12 rounded-2xl glass-card hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all active:scale-95">
+        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+      </button>
+
+      <button id="btn-toggle" class="flex-1 max-w-[170px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-gray-950 font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-95 transition-all duration-200">
+        <i id="btn-icon" data-lucide="play" class="w-5 h-5 fill-current"></i>
+        <span id="btn-text">Start</span>
+      </button>
+
+      <button id="btn-skip" title="Skip to next session" class="w-12 h-12 rounded-2xl glass-card hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all active:scale-95">
+        <i data-lucide="skip-forward" class="w-5 h-5"></i>
+      </button>
+
+      <button id="btn-sound" title="Toggle Sound" class="w-12 h-12 rounded-2xl glass-card hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-all active:scale-95">
+        <i id="sound-icon" data-lucide="volume-2" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Motivational Kitty Footnote -->
+    <footer class="mt-6 text-center text-xs text-slate-400/80 flex items-center gap-1.5 justify-center">
+      <span>Follow Patilda the cosmic cat along the aurora ribbon.</span>
+      <span class="inline-block animate-bounce">&hearts;</span>
+    </footer>
   </main>
 
-  <!-- JavaScript Application Logic -->
   <script>
-    /* ==========================================================
-       1. CONFIGURATION & STATE
-       ========================================================== */
-    const FOCUS_SECONDS = 50 * 60; // 50 minutes
-    const BREAK_SECONDS = 10 * 60; // 10 minutes
+    const FOCUS_SECONDS = 50 * 60;
+    const BREAK_SECONDS = 10 * 60;
     const RADIUS = 115;
-    const CIRCUMFERENCE = 2 * Math.PI * RADIUS; // ~722.56
+    const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-    let mode = 'focus'; // 'focus' | 'break'
+    let mode = 'focus';
     let totalDuration = FOCUS_SECONDS;
     let timeLeft = FOCUS_SECONDS;
     let timerId = null;
@@ -470,12 +412,12 @@
     let completedCycles = 0;
     let soundEnabled = true;
 
-    // DOM Elements
     const timeDisplay = document.getElementById('time-display');
     const sessionLabel = document.getElementById('session-label');
     const statusTag = document.getElementById('status-tag');
     const cycleVal = document.getElementById('cycle-val');
     const progressCircle = document.getElementById('progress-circle');
+    const catCarrier = document.getElementById('cat-carrier');
     const btnToggle = document.getElementById('btn-toggle');
     const btnIcon = document.getElementById('btn-icon');
     const btnText = document.getElementById('btn-text');
@@ -488,93 +430,97 @@
     const ambientGlow = document.getElementById('ambient-glow');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toast-message');
-    const focusCatSvg = document.getElementById('focus-cat-svg');
-    const breakCatSvg = document.getElementById('break-cat-svg');
+    
+    // Cat parts for switching
+    const focusGlasses = document.getElementById('focus-glasses');
+    const catEyesFocus = document.getElementById('cat-eyes-focus');
+    const catEyesBreak = document.getElementById('cat-eyes-break');
+    const breakTeacup = document.getElementById('break-teacup');
+    const bubbleBg = document.getElementById('bubble-bg');
+    const bubbleRect = document.getElementById('bubble-rect');
+    const bubblePoly = document.getElementById('bubble-poly');
+    const bubbleLine = document.getElementById('bubble-line');
+    const bubbleText = document.getElementById('bubble-text');
 
-    /* ==========================================================
-       2. WEB AUDIO API SYNTHESIZER
-       ========================================================== */
     let audioCtx = null;
-
     function getAudioContext() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
       return audioCtx;
     }
 
-    function playChime(isFocusEnd) {
+    function playChime(isBreakStart) {
       if (!soundEnabled) return;
       try {
         const ctx = getAudioContext();
         const now = ctx.currentTime;
-        const freqs = isFocusEnd ? [523.25, 659.25, 783.99, 1046.50] : [440, 554.37, 659.25, 880];
-
-        freqs.forEach((f, idx) => {
+        const notes = isBreakStart ? [523.25, 659.25, 783.99, 1046.50] : [783.99, 659.25, 587.33, 440.00];
+        notes.forEach((freq, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
-          osc.type = idx === freqs.length - 1 ? 'triangle' : 'sine';
-          osc.frequency.setValueAtTime(f, now + idx * 0.12);
-
-          gain.gain.setValueAtTime(0, now + idx * 0.12);
-          gain.gain.linearRampToValueAtTime(0.2, now + idx * 0.12 + 0.04);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.12 + 0.9);
-
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.16);
+          gain.gain.setValueAtTime(0.001, now + idx * 0.16);
+          gain.gain.exponentialRampToValueAtTime(0.18, now + idx * 0.16 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.16 + 1.2);
           osc.connect(gain);
           gain.connect(ctx.destination);
-
-          osc.start(now + idx * 0.12);
-          osc.stop(now + idx * 0.12 + 1.0);
+          osc.start(now + idx * 0.16);
+          osc.stop(now + idx * 0.16 + 1.3);
         });
-      } catch (e) {
-        console.warn("Audio Context playback prevented:", e);
-      }
+      } catch (e) {}
     }
 
     function playClickSound() {
       if (!soundEnabled) return;
       try {
         const ctx = getAudioContext();
-        const now = ctx.currentTime;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(320, now);
-        osc.frequency.exponentialRampToValueAtTime(160, now + 0.05);
-
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(540, ctx.currentTime);
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.06);
         osc.connect(gain);
         gain.connect(ctx.destination);
-
-        osc.start(now);
-        osc.stop(now + 0.06);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.07);
       } catch (e) {}
     }
 
-    /* ==========================================================
-       3. RENDER TIMER & PROGRESS RING
-       ========================================================== */
-    function render() {
-      const mins = Math.floor(timeLeft / 60);
-      const secs = timeLeft % 60;
-      const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      
-      timeDisplay.textContent = formatted;
-      document.title = `(${formatted}) Focus Time with Patilda`;
+    function updateCatPosition(progressFraction) {
+      const startAngle = -Math.PI / 2;
+      const angle = startAngle + (progressFraction * 2 * Math.PI);
+      const dialBox = document.querySelector('.relative.w-72');
+      const boxSize = dialBox ? dialBox.offsetWidth : 320;
+      const scale = boxSize / 280;
+      const effectiveRadius = RADIUS * scale;
 
-      const progress = 1 - (timeLeft / totalDuration);
-      const dashOffset = CIRCUMFERENCE * (1 - progress);
-      progressCircle.style.strokeDashoffset = dashOffset;
+      const x = Math.cos(angle) * effectiveRadius;
+      const y = Math.sin(angle) * effectiveRadius;
+      const tangentDeg = (angle * 180 / Math.PI) + 90;
+      
+      catCarrier.style.transform = `translate(${x}px, ${y}px) rotate(${tangentDeg}deg)`;
     }
 
-    /* ==========================================================
-       4. TIMER CONTROLS & MODES
-       ========================================================== */
+    function formatTime(sec) {
+      const mins = Math.floor(sec / 60);
+      const secs = sec % 60;
+      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function render() {
+      timeDisplay.textContent = formatTime(timeLeft);
+      document.title = `${formatTime(timeLeft)} - ${mode === 'focus' ? 'Focus' : 'Break'} | Focus Time with Patilda`;
+
+      const progressFraction = (totalDuration - timeLeft) / totalDuration;
+      const offset = CIRCUMFERENCE * (1 - progressFraction);
+      progressCircle.style.strokeDashoffset = offset;
+      updateCatPosition(progressFraction);
+    }
+
     function switchMode(newMode, autoStart = false) {
       mode = newMode;
       clearInterval(timerId);
@@ -590,13 +536,22 @@
         progressCircle.setAttribute('stroke', 'url(#focusGradient)');
         ambientGlow.className = "absolute w-64 h-64 rounded-full bg-emerald-500/15 blur-3xl -z-10 pointer-events-none";
 
-        if (focusCatSvg) focusCatSvg.classList.remove('hidden');
-        if (breakCatSvg) breakCatSvg.classList.add('hidden');
+        // Show glasses, cyan eyes, Do it!
+        focusGlasses.classList.remove('hidden');
+        catEyesFocus.classList.remove('hidden');
+        catEyesBreak.classList.add('hidden');
+        breakTeacup.classList.add('hidden');
+
+        bubbleBg.setAttribute('width', '44');
+        bubbleRect.setAttribute('width', '44');
+        bubblePoly.setAttribute('points', '63,20 60,25 68,19');
+        bubbleLine.setAttribute('points', '63,20 60,25 68,19');
+        bubbleText.setAttribute('x', '79');
+        bubbleText.textContent = "Do it!";
 
         btnToggle.className = "flex-1 max-w-[170px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-gray-950 font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-95 transition-all duration-200";
-
-        modeFocusBtn.className = "py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
-        modeBreakBtn.className = "py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-white/5 text-slate-400 hover:bg-white/10 border border-transparent";
+        modeFocusBtn.className = "py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+        modeBreakBtn.className = "py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all bg-white/5 text-slate-400 hover:bg-white/10 border border-transparent";
       } else {
         totalDuration = BREAK_SECONDS;
         timeLeft = BREAK_SECONDS;
@@ -607,21 +562,28 @@
         progressCircle.setAttribute('stroke', 'url(#breakGradient)');
         ambientGlow.className = "absolute w-64 h-64 rounded-full bg-purple-500/20 blur-3xl -z-10 pointer-events-none";
 
-        if (focusCatSvg) focusCatSvg.classList.add('hidden');
-        if (breakCatSvg) breakCatSvg.classList.remove('hidden');
+        // Show teacup, closed eyes, its tea time
+        focusGlasses.classList.add('hidden');
+        catEyesFocus.classList.add('hidden');
+        catEyesBreak.classList.remove('hidden');
+        breakTeacup.classList.remove('hidden');
+
+        bubbleBg.setAttribute('width', '76');
+        bubbleRect.setAttribute('width', '76');
+        bubblePoly.setAttribute('points', '57,19 54,24 62,18');
+        bubbleLine.setAttribute('points', '57,19 54,24 62,18');
+        bubbleText.setAttribute('x', '73');
+        bubbleText.textContent = "its tea time";
 
         btnToggle.className = "flex-1 max-w-[170px] py-3.5 px-6 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 hover:from-purple-400 hover:to-pink-300 text-gray-950 font-bold flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25 active:scale-95 transition-all duration-200";
-
-        modeFocusBtn.className = "py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-white/5 text-slate-400 hover:bg-white/10 border border-transparent";
-        modeBreakBtn.className = "py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-purple-500/20 text-purple-300 border border-purple-500/40";
+        modeFocusBtn.className = "py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all bg-white/5 text-slate-400 hover:bg-white/10 border border-transparent";
+        modeBreakBtn.className = "py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all bg-purple-500/20 text-purple-300 border border-purple-500/40";
       }
 
       updatePlayBtnUI();
       render();
 
-      if (autoStart) {
-        startTimer();
-      }
+      if (autoStart) startTimer();
     }
 
     function updatePlayBtnUI() {
@@ -648,12 +610,8 @@
     function onTimerComplete() {
       clearInterval(timerId);
       isRunning = false;
-
-      // Increment cycle count by +1
       completedCycles += 1;
-      if (cycleVal) {
-        cycleVal.textContent = completedCycles;
-      }
+      if (cycleVal) cycleVal.textContent = completedCycles;
 
       if (mode === 'focus') {
         playChime(true);
@@ -694,11 +652,8 @@
 
     function toggleTimer() {
       playClickSound();
-      if (isRunning) {
-        pauseTimer();
-      } else {
-        startTimer();
-      }
+      if (isRunning) pauseTimer();
+      else startTimer();
     }
 
     function resetTimer() {
@@ -721,9 +676,6 @@
       }
     }
 
-    /* ==========================================================
-       5. EVENT LISTENERS
-       ========================================================== */
     if (btnToggle) btnToggle.addEventListener('click', toggleTimer);
     if (btnReset) btnReset.addEventListener('click', resetTimer);
     if (btnSkip) btnSkip.addEventListener('click', skipSession);
@@ -763,9 +715,8 @@
       });
     }
 
-    /* ==========================================================
-       6. AURORA BOREALIS CANVAS SIMULATION
-       ========================================================== */
+    window.addEventListener('resize', () => render());
+
     const canvas = document.getElementById('aurora-canvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -780,7 +731,7 @@
     resizeCanvas();
 
     const ribbons = [
-      { color1: 'rgba(52, 211, 153, 0.45)', color2: 'rgba(10, 185, 129, 0)', speed: 0.0008, amp: 90, freq: 0.003, yOffset: 0.35, phase: 0 },
+      { color1: 'rgba(52, 211, 153, 0.45)', color2: 'rgba(16, 185, 129, 0)', speed: 0.0008, amp: 90, freq: 0.003, yOffset: 0.35, phase: 0 },
       { color1: 'rgba(45, 212, 191, 0.4)', color2: 'rgba(6, 95, 70, 0)', speed: 0.0012, amp: 120, freq: 0.002, yOffset: 0.42, phase: 2 },
       { color1: 'rgba(139, 92, 246, 0.35)', color2: 'rgba(88, 28, 135, 0)', speed: 0.0009, amp: 80, freq: 0.0025, yOffset: 0.48, phase: 4 },
       { color1: 'rgba(99, 102, 241, 0.3)', color2: 'rgba(30, 27, 75, 0)', speed: 0.0007, amp: 110, freq: 0.0018, yOffset: 0.55, phase: 1 },
@@ -846,9 +797,6 @@
       }
     }
 
-    /* ==========================================================
-       7. INITIALIZATION
-       ========================================================== */
     window.onload = function() {
       lucide.createIcons();
       createStars();
